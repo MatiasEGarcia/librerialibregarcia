@@ -1,3 +1,5 @@
+import CartWidwet from "./CartWidget";
+
 function NavBar() {
     return (
         <nav className="navbar navbar-expand-lg bg-light">
@@ -9,7 +11,10 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navOpcionesCollapse">
                     <div className="navbar-nav navOpciones">
                         <a className="nav-link" href="#">Cuenta</a>
-                        <a className="nav-link" href="#">Carrito</a>
+                        <a className="nav-link" href="#">
+                            Carrito
+                            <CartWidwet/>
+                        </a>
                         <a className="nav-link" href="#">Favoritos</a>
                         <div className="dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="dropdownGeneros" data-bs-toggle="dropdown" aria-expanded="false">
