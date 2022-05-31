@@ -22,11 +22,11 @@ function NavBar() {
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="dropdownGeneros">
                                 <li><a className="dropdown-item" href="#">Fantasia</a></li>
-                                <li><a className="dropdown-item" href="#">Suspenso</a></li>
+                                <li><a className="dropdown-item" href="#">Ciencia Ficcion</a></li>
                                 <li><a className="dropdown-item" href="#">Historia</a></li>
                                 <li><a className="dropdown-item" href="#">Romance</a></li>
-                                <li><hr class="dropdown-divider"/></li>
-                                <li><a class="dropdown-item" href="#">Otros</a></li>
+                                <li><a className="dropdown-item" href="#">Aventura</a></li>
+                                <li><a className="dropdown-item" href="#">Misterio</a></li>
                             </ul>
                         </div>
                     </div>

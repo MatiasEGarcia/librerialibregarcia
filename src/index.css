@@ -19,3 +19,29 @@ code {
   display: flex;
   justify-content: space-around;
 }
+
+/*-----------------------------------------------Componente ItemListContainer*/
+.itemListContainer{
+  margin-top: 2rem;
+}
+/*-----------------------------------------------Componente itemList*/
+.bookList{
+  display: flex;
+  justify-content: center;
+}
+/*-----------------------------------------------Componente item*/
+.listBookCard{
+  width: 15rem;
+}
+
+.listBookCard .contenedorImg {
+  height: 250px;
+  width: 100%;
+  margin-top: 0.2rem;
+}
+
+.listBookCard .contenedorImg .img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}

@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <NavBar/>
-      <ItemListContainer saludo='Holass , perdon por tardar en enviar el desafio' />
+      <ItemListContainer/>
     </div>
   );
 }
