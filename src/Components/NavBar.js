@@ -1,32 +1,34 @@
 import CartWidwet from "./CartWidget";
+import { Link } from "react-router-dom";
 
 function NavBar() {
     return (
         <nav className="navbar navbar-expand-lg bg-light">
             <div className="container-fluid">
-                <a className="navbar-brand" href="/">Libreria libre</a>
+                <Link to="/" className="navbar-brand ">
+                    <h1>Libreria libre</h1>
+                </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navOpcionesCollapse" aria-controls="navBarOpciones" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navOpcionesCollapse">
                     <div className="navbar-nav navOpciones">
-                        <a className="nav-link" href="#">Cuenta</a>
-                        <a className="nav-link" href="#">
-                            Carrito
+                        <Link className="nav-link" to="#">Cuenta</Link>
+                        <Link className="nav-link" to="#">
                             <CartWidwet/>
-                        </a>
-                        <a className="nav-link" href="#">Favoritos</a>
+                        </Link>
+                        <Link className="nav-link" to="#">Favoritos</Link>
                         <div className="dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="dropdownGeneros" data-bs-toggle="dropdown" aria-expanded="false">
+                            <Link className="nav-link dropdown-toggle" to="#" id="dropdownGeneros" data-bs-toggle="dropdown" aria-expanded="false">
                                 Generos
-                            </a>
+                            </Link>
                             <ul className="dropdown-menu" aria-labelledby="dropdownGeneros">
-                                <li><a className="dropdown-item" href="#">Fantasia</a></li>
-                                <li><a className="dropdown-item" href="#">Ciencia Ficcion</a></li>
-                                <li><a className="dropdown-item" href="#">Historia</a></li>
-                                <li><a className="dropdown-item" href="#">Romance</a></li>
-                                <li><a className="dropdown-item" href="#">Aventura</a></li>
-                                <li><a className="dropdown-item" href="#">Misterio</a></li>
+                                <li><Link to="/categories/Fantasia" className="dropdown-item">Fantasia</Link></li>
+                                <li><Link to="/categories/Ciencia Ficcion" className="dropdown-item">Ciencia Ficcion</Link></li>
+                                <li><Link to="/categories/Historia" className="dropdown-item">Historia</Link></li>
+                                <li><Link to="/categories/Romance" className="dropdown-item">Romance</Link></li>
+                                <li><Link to="/categories/Aventura" className="dropdown-item">Aventura</Link></li>
+                                <li><Link to="/categories/Misterio" className="dropdown-item">Misterio</Link></li>
                             </ul>
                         </div>
                     </div>

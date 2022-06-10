@@ -14,34 +14,82 @@ code {
 
 
 /*-----------------------------------------------Componente NavBar*/
+.navbar .nav-link{
+  font-size: 20px;
+}
 .navOpciones{
   width: 30%;
   display: flex;
   justify-content: space-around;
 }
 
+
 /*-----------------------------------------------Componente ItemListContainer*/
 .itemListContainer{
   margin-top: 2rem;
-}
-/*-----------------------------------------------Componente itemList*/
-.bookList{
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 /*-----------------------------------------------Componente item*/
 .listBookCard{
   width: 15rem;
 }
 
-.listBookCard .contenedorImg {
+.listBookCard .containerImg {
   height: 250px;
   width: 100%;
   margin-top: 0.2rem;
 }
 
-.listBookCard .contenedorImg .img{
+.listBookCard .containerImg .img{
   height: 100%;
   width: 100%;
   object-fit: contain;
+}
+
+/*-----------------------------------------------ItemDetailContainer component*/
+.itemDetailContainer .titleDetailBook{
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/*----------------------------------------------ItemDetail conponent*/
+.itemDetailContainer .containerImg{
+  margin-top: 1.5rem;
+  height: 25rem;
+  width: 100%;  
+}
+
+.itemDetailContainer .containerImg .img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.itemDetailContainer .bookPrice h4,
+.itemDetailContainer .bookStock h4{
+  display: inline-block;
+}
+
+/*---------------------------------------------Counter component*/
+.counterContainer{
+  width: 15rem;
+  display: flex;
+  justify-content: space-between;
+}
+.counterContainer li{
+  list-style: none;
+}
+
+.decrementButton i,
+.incrementButton i{
+  font-size: 25px;
+}
+
+.counterContainer .order p{
+  font-size: 20px;
+}
+
+.counterContainer .cartButton{
+  font-size: 20px;
 }
