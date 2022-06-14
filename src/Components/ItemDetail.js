@@ -1,6 +1,16 @@
 import Counter from "./Counter";
+import {useContext } from "react";
+import CartContext from "../context/CartContext";
 
-const ItemDetail = ({ name, img, price, description, stock, categoriesList }) => {
+const ItemDetail = ({id, name, img, price, description, stock, categoriesList }) => {
+
+    const {addBook,clearCart} = useContext(CartContext);
+
+    const handleAdd= (quantity ) => {
+        console.log(`se agregaron ${quantity } ${name}`)
+        addBook({id,name,price,quantity});
+    };
+
 
     return (
         <>
@@ -31,7 +41,9 @@ const ItemDetail = ({ name, img, price, description, stock, categoriesList }) =>
                                 <li className="bookStock list-group-item">
                                     <h4>Stock</h4> : {stock}</li>
                                 <li className="list-group-item">
-                                    <Counter initialValue={stock} />
+                                    {/*itemCount*/}
+                                    <Counter initialValue={stock} add={handleAdd} />
+                                    <button onClick={clearCart}>Limpiar</button>
                                 </li>
                             </ul>
 
