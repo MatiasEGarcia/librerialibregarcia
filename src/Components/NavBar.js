@@ -20,7 +20,7 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navOpcionesCollapse">
                     <div className="navbar-nav navOpciones">
                         <Link className="nav-link" to="#">Cuenta</Link>
-                        <Link className="nav-link" to="#">
+                        <Link className="nav-link" to="/cart">
                             <CartWidwet/>
                             {totalQuantity}
                         </Link>
