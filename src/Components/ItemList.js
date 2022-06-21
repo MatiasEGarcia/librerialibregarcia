@@ -1,12 +1,14 @@
 import Item from "./Item";
+import CartItem from "./CartItem";
 
 
-const ItemList = ({ books }) => {
-    return (
-        <>
-            {books.map(book => <Item key={book.id} {...book}/>)}   {/*Se va a iterar item por cada elemento que haya en books, cada iteracion con su respectiva key*/}
-        </>
-    )
+const ItemList = ({ books , item}) => {
+
+    if(item.match("item")){
+        return(<>{books.map(book => <Item key={book.id} {...book}/>)} </>)  
+    }else{
+        return(<>{books.map(book => <CartItem key={book.id} {...book}/>)} </>) /*Para la vista del carrito*/
+    }
 }
 
 export default ItemList;

@@ -93,3 +93,19 @@ code {
 .counterContainer .cartButton{
   font-size: 20px;
 }
+
+/*----------------------------------------------CartListContainer component*/
+
+.cartListContainerFooter, .cartEmptyListContainer{
+  margin-top: 1.5rem;
+}
+
+
+.cartListContainerFooter{
+  display: flex;
+  justify-content: space-between;
+}
+
+.cartEmptyListContainer .fa-arrow-left{
+  margin-right: 5px;
+}
