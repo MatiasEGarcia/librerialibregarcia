@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { getBookById } from "../asyncmock";
 import ItemDetail from "./ItemDetail";
 import { useParams } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../Service/firebase";
 
 const ItemDetailContainer = () => {
 
@@ -13,13 +14,17 @@ const ItemDetailContainer = () => {
     useEffect(() => {
         setLoading(true);
 
-        getBookById(idBook).then(response => {
-            setBook(response);
+        const docRef= doc(db,'books',idBook);
+
+        getDoc(docRef).then(doc => {
+            const bookFormatted = {id:doc.id, ...doc.data()};
+            setBook(bookFormatted);
         }).catch(error => {
             console.log(error);
         }).finally(()=>{
             setLoading(false);
         });
+        
 
     }, []);
 

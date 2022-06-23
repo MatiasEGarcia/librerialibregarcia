@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { getBooks } from '../asyncmock';
 import ItemList from './ItemList';
 import { useParams } from 'react-router-dom';
-
+import { db } from '../Service/firebase';
+import{collection,getDocs,query,where} from 'firebase/firestore';
 
 const ItemListContainer = () => {
 
@@ -13,23 +13,22 @@ const ItemListContainer = () => {
     useEffect(() => {
             setLoading(true);
 
-            if(!categoryName){
-                getBooks().then(response => {
-                    setBooks(response);
-                }).catch(error => {
-                    console.log(error);
-                }).finally(()=>{
-                    setLoading(false);
+            const collectionRef=categoryName ? 
+                query(collection(db, 'books'),where('category','array-contains-any', [categoryName] ) ) /*obtengo documentos que tengan ese nombre de categoria en el array category*/
+                : (collection(db,'books'));
+
+            //peticion asincrona al firestore    
+            getDocs(collectionRef).then(response => {
+                const booksFormatted = response.docs.map(doc => {
+                    return{id: doc.id , ...doc.data()};
                 });
-            }else{
-                getBooks(categoryName).then(response => {
-                    setBooks(response);
-                }).catch(error =>{
-                    console.log(error);
-                }).finally(()=>{
-                    setLoading(false)
-                });
-            };   
+                setBooks(booksFormatted);
+            }).catch(error=>{
+                console.log(error);
+            }).finally(()=>{
+                setLoading(false)
+            })
+  
     }, [categoryName]) //Para que se ejecute cada vez que cambiamos de categoria
 
     if(loading){
