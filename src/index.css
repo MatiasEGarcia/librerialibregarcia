@@ -109,3 +109,41 @@ code {
 .cartEmptyListContainer .fa-arrow-left{
   margin-right: 5px;
 }
+
+/*----------------------------------------------Modal component*/
+.modal{
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0 , 0.75);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.isOpen{
+  display: flex;
+}
+
+.modalContainer{
+  position: relative;
+  min-width: 30rem;
+  max-width: 30rem;
+  height: auto;
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 1%;
+}
+
+.modalHeader{
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgba(0, 0, 0, 0.267);
+  margin-bottom: 1rem;
+}
