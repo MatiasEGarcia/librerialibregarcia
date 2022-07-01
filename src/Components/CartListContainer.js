@@ -6,12 +6,15 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from "../Service/firebase";
 import Modal from "./Modal";
 import { useModal } from "../hooks/useModal";
+import { useNotification } from "../Notification/Notification";
 
 /*Cart.js*/
 const CartListContainer = () => {
 
     const { cart, totalAmount, clearCart } = useContext(CartContext);
+    //customHooks
     const { isOpen, openModal, closeModal } = useModal(false);
+    const setNotification = useNotification();
 
     const generateOrder = (evt) => {
         evt.preventDefault();
@@ -33,6 +36,7 @@ const CartListContainer = () => {
             console.log(`El id de la orden es : ${id}`);
             clearCart();
             closeModal();
+            setNotification('success',`Su orden se genero correctamente. El id de su orden es: ${id}`);
         });
 
     }
