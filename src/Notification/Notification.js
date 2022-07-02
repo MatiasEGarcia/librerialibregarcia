@@ -3,21 +3,10 @@ import { useState, createContext, useContext } from "react";
 //Componente que despliega la notificacion
 const Notification = ({ message, severity }) => {
 
-    const notificationStyle = {
-        position: 'absolute',
-        top: 100,
-        right: 5,
-        width: 'auto',
-        height: 'auto',
-        color: 'white',
-        padding: '10px 20px 10px 20px',
-        borderRadius: '10px'
-    }
-
     if (message === '') return
 
     return (
-        <div className={` notificationContainer ${severity === 'error' ? 'Error' : 'Success'}`}>
+        <div className={`notificationContainer ${severity === 'error' ? 'Error' : 'Success'}`}>
             <div className="notificationHeader">
                 <h4>{severity === 'error' ? 'Error' : 'Success'}</h4>
             </div>
@@ -40,9 +29,9 @@ export const NotificationProvider = ({ children }) => {
         setMsgConfig({ severity: sev, message: msg });
 
         //Para que desaparesca la notificacion
-        /*setTimeout(() => {
+        setTimeout(() => {
             setMsgConfig({ ...msgConfig, message: '' })
-        }, timeout * 1000)*/
+        }, timeout * 1000)
 
     }
 

@@ -5,13 +5,8 @@ import CartContext from "../context/CartContext";
 
 function NavBar() {
 
-    const { totalQuantity, cart } = useContext(CartContext);
-    let showCart = false;
+    const { totalQuantity } = useContext(CartContext);
 
-    //Si hay algun libro en el carrito mostramos el <CartWidwet />
-    if (cart.length) {
-        showCart = true;
-    }
 
     return (
         <nav className="navbar navbar-expand-lg bg-light">
@@ -25,12 +20,10 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navOpcionesCollapse">
                     <div className="navbar-nav navOpciones">
                         <Link className="nav-link" to="#">Cuenta</Link>
-                        {showCart &&
                             <Link className="nav-link" to="/cart">
                                 <CartWidwet />
                                 {totalQuantity}
                             </Link>
-                        }
                         <Link className="nav-link" to="#">Favoritos</Link>
                         <div className="dropdown">
                             <Link className="nav-link dropdown-toggle" to="#" id="dropdownGeneros" data-bs-toggle="dropdown" aria-expanded="false">

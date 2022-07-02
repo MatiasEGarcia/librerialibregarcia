@@ -1,16 +1,16 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CartContext from "../context/CartContext";
 import ItemList from "./ItemList";
 import { Link } from "react-router-dom";
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, writeBatch, query, where, documentId, getDocs } from 'firebase/firestore';
 import { db } from "../Service/firebase";
 import Modal from "./Modal";
 import { useModal } from "../hooks/useModal";
 import { useNotification } from "../Notification/Notification";
 
-/*Cart.js*/
+/*Cart.js*/ 
 const CartListContainer = () => {
-
+    const [loading, setLoading] = useState(false);
     const { cart, totalAmount, clearCart } = useContext(CartContext);
     //customHooks
     const { isOpen, openModal, closeModal } = useModal(false);
@@ -18,6 +18,7 @@ const CartListContainer = () => {
 
     const generateOrder = (evt) => {
         evt.preventDefault();
+        setLoading(true);
 
         const objCreate = {
             buyer: {
@@ -30,16 +31,55 @@ const CartListContainer = () => {
             totalAmount
         };
 
-        const collectionRef = collection(db, 'orders');
+        const batch = writeBatch(db);
 
-        addDoc(collectionRef, objCreate).then(({ id }) => {
-            console.log(`El id de la orden es : ${id}`);
+        const ids = cart.map(book => book.id);
+        const outOfStock = [];
+
+        const collectionRef = collection(db, 'books');
+       
+        getDocs(query(collectionRef, where(documentId(), 'in', ids)))
+        .then(response => {
+            response.docs.forEach(doc => {
+                const dataDoc = doc.data();
+
+                const book = cart.find(book => book.id === book.id);
+                const prodQuantity = book.quantity;
+
+                if(dataDoc.stock >= prodQuantity) {
+                    batch.update(doc.ref, { stock: dataDoc.stock - prodQuantity });
+                } else {
+                    outOfStock.push({ id: doc.id, ...dataDoc});
+                }
+            })
+        }).then(() => {
+            if(outOfStock.length === 0) {
+                const collectionRef = collection(db, 'orders');
+                return addDoc(collectionRef, objCreate);
+            } else {
+                return Promise.reject({ type: 'outOfStock', books: outOfStock });
+            }
+        }).then(({ id }) => {
+            batch.commit();
             clearCart();
+            setNotification('success',`Your order was generated successfully. Your order id is: ${id}`);
+        }).catch(error => {
+            if(error.type === 'outOfStock') {
+                setNotification('error','There are products that do not have stock');
+            } else {
+                console.log(error);
+            }
+        }).finally(() => {
+            setLoading(false);
             closeModal();
-            setNotification('success',`Su orden se genero correctamente. El id de su orden es: ${id}`);
-        });
-
+        })
     }
+
+
+    if (loading) {
+        return <h1>Loading...</h1>
+    }
+
 
     if (!cart.length) {
         return (
