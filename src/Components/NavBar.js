@@ -2,9 +2,10 @@ import CartWidwet from "./CartWidget";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import CartContext from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 function NavBar() {
-
+    const { userEmail, logOut } = useAuth();
     const { totalQuantity } = useContext(CartContext);
 
 
@@ -20,10 +21,10 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navOpcionesCollapse">
                     <div className="navbar-nav navOpciones">
                         <Link className="nav-link" to="#">Cuenta</Link>
-                            <Link className="nav-link" to="/cart">
-                                <CartWidwet />
-                                {totalQuantity}
-                            </Link>
+                        <Link className="nav-link" to="/cart">
+                            <CartWidwet />
+                            {totalQuantity}
+                        </Link>
                         <Link className="nav-link" to="#">Favoritos</Link>
                         <div className="dropdown">
                             <Link className="nav-link dropdown-toggle" to="#" id="dropdownGeneros" data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,6 +39,22 @@ function NavBar() {
                                 <li><Link to="/categories/Misterio" className="dropdown-item">Misterio</Link></li>
                             </ul>
                         </div>
+                    </div>
+                    <div className="navbar-nav navUserDetails">
+                        {userEmail === null ?
+                            <div className="sign">
+                                <Link className="nav-link" to="/account/signIn">Sign In</Link>
+                                <Link className="nav-link" to="/account/signUp">Sign Up</Link>
+                            </div>
+                            :
+                            <div className="user">
+                                <h5 className="userEmail"><i className="fa-solid fa-user"></i>{userEmail}</h5>
+                                <button className="btn btn-danger" onClick={() => logOut()}>Log Out</button>
+                            </div>
+                        }
+
+
+
                     </div>
                 </div>
             </div>
