@@ -2,11 +2,32 @@ import { useContext, useState } from "react";
 import CartContext from "../context/CartContext";
 import ItemList from "./ItemList";
 import { Link } from "react-router-dom";
-import { collection, addDoc, writeBatch, query, where, documentId, getDocs } from 'firebase/firestore';
-import { db } from "../Service/firebase";
 import Modal from "./Modal";
 import { useModal } from "../hooks/useModal";
-import { useNotification } from "../Notification/Notification";
+import { useNotification } from "../notification/Notification";
+import Form from "./Form";
+import { useForm } from "../hooks/useForm";
+import { generateBookOrder } from "../services/firebase/firestore";
+
+const formFields = [
+    {fieldName:'Name', fieldType:'text'},
+    {fieldName:'Surname', fieldType:'text'},
+    {fieldName:'Tel', fieldType:'tel'},
+    {fieldName:'Email', fieldType:'email'}
+]
+
+const initialForm= {Name:"", Surname:"",Tel:"",Email:""};
+
+//estas validaciones podria ponerlas en un helper
+const validationsForm= (form) =>{
+    let errors={};
+
+    if(!form.name.trim()){
+        errors.name="El campo nombre es requerido";
+    }
+
+    return errors;
+};
 
 /*Cart.js*/ 
 const CartListContainer = () => {
@@ -15,52 +36,24 @@ const CartListContainer = () => {
     //customHooks
     const { isOpen, openModal, closeModal } = useModal(false);
     const setNotification = useNotification();
+    const{form,error,handleChange,handleBlur} = useForm(initialForm,validationsForm);
 
-    const generateOrder = (evt) => {
+    const formSubmit = (evt) => {
         evt.preventDefault();
         setLoading(true);
 
         const objCreate = {
             buyer: {
-                name: evt.target.inputName.value,
-                surname: evt.target.inputSurname.value,
-                tel: evt.target.inputTel.value,
-                email: evt.target.inputEmail.value
+                name: evt.target.Name.value,
+                surname: evt.target.Surname.value,
+                tel: evt.target.Tel.value,
+                email: evt.target.Email.value
             },
             item: cart,
             totalAmount
         };
 
-        const batch = writeBatch(db);
-
-        const ids = cart.map(book => book.id);
-        const outOfStock = [];
-
-        const collectionRef = collection(db, 'books');
-       
-        getDocs(query(collectionRef, where(documentId(), 'in', ids)))
-        .then(response => {
-            response.docs.forEach(doc => {
-                const dataDoc = doc.data();
-
-                const book = cart.find(book => book.id === book.id);
-                const prodQuantity = book.quantity;
-
-                if(dataDoc.stock >= prodQuantity) {
-                    batch.update(doc.ref, { stock: dataDoc.stock - prodQuantity });
-                } else {
-                    outOfStock.push({ id: doc.id, ...dataDoc});
-                }
-            })
-        }).then(() => {
-            if(outOfStock.length === 0) {
-                const collectionRef = collection(db, 'orders');
-                return addDoc(collectionRef, objCreate);
-            } else {
-                return Promise.reject({ type: 'outOfStock', books: outOfStock });
-            }
-        }).then(({ id }) => {
-            batch.commit();
+        generateBookOrder(objCreate).then(( id ) => {
             clearCart();
             setNotification('success',`Your order was generated successfully. Your order id is: ${id}`);
         }).catch(error => {
@@ -114,26 +107,15 @@ const CartListContainer = () => {
             </div>
             <Modal title='Complete before buying' isOpen={isOpen} closeModal={closeModal}>
                 <div className="modalBody">
-                    <form id="userFormBuy" onSubmit={(evt) => generateOrder(evt)}>
-                        <div className="mb-3">
-                            <label for="inputName" className="form-label">Name</label>
-                            <input type="text" className="form-control" id="inputName" name="inputName" />
-                        </div>
-                        <div className="mb-3">
-                            <label for="inputSurname" className="form-label">Surname</label>
-                            <input type="text" className="form-control" id="inputSurname" name="inputSurname" />
-                        </div>
-                        <div className="mb-3">
-                            <label for="inputTel" className="form-label">Tel</label>
-                            <input type="tel" className="form-control" id="inputTel" name="inputTel" />
-                        </div>
-                        <div className="mb-3">
-                            <label for="inputEmail" className="form-label">Email address</label>
-                            <input type="email" className="form-control" id="inputEmail" name="inputEmail" aria-describedby="emailHelp" />
-                            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                        </div>
-                        <button type="submit" className="btn btn-success btn-lg">Finish purchase</button>
-                    </form>
+                    <Form 
+                    onSubmitHandler={formSubmit} 
+                    submitBtnMessage='Finish purchase' 
+                    fields={formFields} 
+                    change={handleChange} 
+                    blur={handleBlur}
+                    formValues={form}
+                    error={error}
+                    />
                 </div>
             </Modal>
         </div>
