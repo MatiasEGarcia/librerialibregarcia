@@ -5,38 +5,16 @@ import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import { useModal } from "../hooks/useModal";
 import { useNotification } from "../notification/Notification";
-import Form from "./Form";
-import { useForm } from "../hooks/useForm";
+import BookOrderForm from "./BookOrderForm";
 import { generateBookOrder } from "../services/firebase/firestore";
 
-const formFields = [
-    {fieldName:'Name', fieldType:'text'},
-    {fieldName:'Surname', fieldType:'text'},
-    {fieldName:'Tel', fieldType:'tel'},
-    {fieldName:'Email', fieldType:'email'}
-]
-
-const initialForm= {Name:"", Surname:"",Tel:"",Email:""};
-
-//estas validaciones podria ponerlas en un helper
-const validationsForm= (form) =>{
-    let errors={};
-
-    if(!form.name.trim()){
-        errors.name="El campo nombre es requerido";
-    }
-
-    return errors;
-};
-
-/*Cart.js*/ 
+/*Cart.js*/
 const CartListContainer = () => {
     const [loading, setLoading] = useState(false);
     const { cart, totalAmount, clearCart } = useContext(CartContext);
     //customHooks
     const { isOpen, openModal, closeModal } = useModal(false);
     const setNotification = useNotification();
-    const{form,error,handleChange,handleBlur} = useForm(initialForm,validationsForm);
 
     const formSubmit = (evt) => {
         evt.preventDefault();
@@ -47,18 +25,19 @@ const CartListContainer = () => {
                 name: evt.target.Name.value,
                 surname: evt.target.Surname.value,
                 tel: evt.target.Tel.value,
-                email: evt.target.Email.value
+                email: evt.target.Email.value,
+                address:evt.target.Address.value
             },
             item: cart,
             totalAmount
         };
 
-        generateBookOrder(objCreate).then(( id ) => {
+        generateBookOrder(objCreate).then((id) => {
             clearCart();
-            setNotification('success',`Your order was generated successfully. Your order id is: ${id}`);
+            setNotification('success', `Your order was generated successfully. Your order id is: ${id}`);
         }).catch(error => {
-            if(error.type === 'outOfStock') {
-                setNotification('error','There are products that do not have stock');
+            if (error.type === 'outOfStock') {
+                setNotification('error', 'There are products that do not have stock');
             } else {
                 console.log(error);
             }
@@ -107,15 +86,7 @@ const CartListContainer = () => {
             </div>
             <Modal title='Complete before buying' isOpen={isOpen} closeModal={closeModal}>
                 <div className="modalBody">
-                    <Form 
-                    onSubmitHandler={formSubmit} 
-                    submitBtnMessage='Finish purchase' 
-                    fields={formFields} 
-                    change={handleChange} 
-                    blur={handleBlur}
-                    formValues={form}
-                    error={error}
-                    />
+                    <BookOrderForm handleSubmit={formSubmit}/>
                 </div>
             </Modal>
         </div>

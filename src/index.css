@@ -179,3 +179,14 @@ code {
   border-bottom-width: 0.3px;
   border-bottom-color: rgb(185, 179, 179);
 }
+
+/*---------------------------------------------input component*/
+
+.inputErrorMessage{
+  color: rgb(214, 64, 64);
+}
+
+.inputLabel{
+  font-size: 1.2rem;
+  font-weight: 500;
+}
