@@ -70,6 +70,7 @@ const BookOrderForm = ({ handleSubmit }) => {
                     required="true"
                 />
             </div>
+            
             <div className="mb-3">
                 <Input
                     type="text"

@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import ItemDetail from "./ItemDetail";
 import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../services/firebase";
 import { Link } from "react-router-dom";
+import { findBook } from "../services/firebase/firestore";
 
 const ItemDetailContainer = () => {
 
@@ -16,10 +15,7 @@ const ItemDetailContainer = () => {
     useEffect(() => {
         setLoading(true);
 
-        const docRef = doc(db, 'books', idBook);
-
-        getDoc(docRef).then(doc => {
-            const bookFormatted = { id: doc.id, ...doc.data() };
+        findBook(idBook).then((bookFormatted) =>{
             setBook(bookFormatted);
         }).catch(error => {
             console.log(error);

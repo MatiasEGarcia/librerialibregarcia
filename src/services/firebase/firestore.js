@@ -1,4 +1,4 @@
-import { collection, addDoc, writeBatch, query, where, documentId, getDocs } from 'firebase/firestore';
+import { collection, addDoc, writeBatch, query, where, documentId, getDocs, getDoc,doc } from 'firebase/firestore';
 import { db } from '.';
 
 
@@ -39,4 +39,42 @@ export const generateBookOrder = (objCreate) => {
                 resolve(id); //id de la orden generada
             })
     });
+};
+
+export const findBook = (idBook) => {
+    return new Promise((resolve, reject) => {
+        const docRef = doc(db, 'books', idBook);
+
+        getDoc(docRef).then(doc => {
+            const bookFormatted = { id: doc.id, ...doc.data() };
+            resolve(bookFormatted);
+        }).catch(error => {
+            reject(error);
+        })
+
+    })
+};
+
+export const getBooks = (categoryName) => {
+
+    return new Promise((resolve, reject) => {
+
+        const collectionRef = categoryName ?
+            query(collection(db, 'books'), where('category', 'array-contains-any', [categoryName])) /*obtengo documentos que tengan ese nombre de categoria en el array category*/
+            : (collection(db, 'books'));
+
+        //peticion asincrona al firestore    
+        getDocs(collectionRef).then(response => {
+            const booksFormatted = response.docs.map(doc => {
+                return { id: doc.id, ...doc.data() };
+            });
+            resolve(booksFormatted);
+        }).catch(error => {
+            reject(error);
+        });
+
+    })
+
+
+
 };

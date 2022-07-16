@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import ItemList from './ItemList';
 import { useParams } from 'react-router-dom';
-import { db } from '../services/firebase';
-import{collection,getDocs,query,where} from 'firebase/firestore';
+import { getBooks } from '../services/firebase/firestore';
 
 const ItemListContainer = () => {
 
@@ -13,15 +12,7 @@ const ItemListContainer = () => {
     useEffect(() => {
             setLoading(true);
 
-            const collectionRef=categoryName ? 
-                query(collection(db, 'books'),where('category','array-contains-any', [categoryName] ) ) /*obtengo documentos que tengan ese nombre de categoria en el array category*/
-                : (collection(db,'books'));
-
-            //peticion asincrona al firestore    
-            getDocs(collectionRef).then(response => {
-                const booksFormatted = response.docs.map(doc => {
-                    return{id: doc.id , ...doc.data()};
-                });
+            getBooks(categoryName).then((booksFormatted)=>{
                 setBooks(booksFormatted);
             }).catch(error=>{
                 console.log(error);
