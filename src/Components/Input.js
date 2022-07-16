@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Input = ({ type, state, changeState, label, regularExpression, errorMessage, changeError, required }) => {
+const Input = ({ type, state, changeState, label, regularExpression, errorMessage, changeError, required, extraFunction }) => {
 
     const [isEmpty, setIsEmpty] = useState(false);
     const emptyMessage= "This field can not be empty";
@@ -29,6 +29,9 @@ const Input = ({ type, state, changeState, label, regularExpression, errorMessag
                 };
             };
         };
+
+        if(extraFunction)extraFunction();
+
     };
 
 

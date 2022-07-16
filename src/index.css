@@ -134,8 +134,8 @@ code {
 
 .modalContainer {
   position: relative;
-  min-width: 30rem;
-  max-width: 30rem;
+  min-width: 50rem;
+  max-width: 50rem;
   height: auto;
   background-color: #fff;
   padding: 0.5rem;
