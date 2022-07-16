@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import CartWidwet from './CartWidget';
 
-//itemCount
+
 const Counter = ({initialValue, add}) => {
     const [quantity , setQuantity ] = useState(0);
 

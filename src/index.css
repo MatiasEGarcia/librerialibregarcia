@@ -19,7 +19,7 @@ code {
 }
 
 .navOpciones {
-  width: 40%;
+  width: auto;
   display: flex;
   justify-content: space-around;
 }

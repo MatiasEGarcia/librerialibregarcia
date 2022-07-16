@@ -8,14 +8,14 @@ const BookOrderForm = ({ handleSubmit }) => {
     const [email, setEmail] = useState({ val: '', error: false });
     const [email2, setEmail2] = useState({ val: '', error: false });
     const [address, setAddress] = useState({ val: '', error: false });
-    const [errors, setErrors] = useState(false)
+    const [errors, setErrors] = useState(false);
 
 
     const expressions = {
-        nameSurname: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-        password: /^.{4,12}$/, // 4 a 12 digitos.
+        nameSurname: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+        password: /^.{4,12}$/, 
         email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-        tel: /^\d{7,14}$/, // 7 a 14 numeros.
+        tel: /^\d{7,14}$/, 
         address: /[A-Za-z0-9'\.\-\s\,]/
 
     }
@@ -23,7 +23,7 @@ const BookOrderForm = ({ handleSubmit }) => {
     const emailRepeatValidation = () => {
         if (email.campo.lenght > 0) {
             if (email.val !== email2.val) {
-                setEmail2((prev) => {                 /*Porque el prev? para acceder al valor del email2, y asi cambiar el estado sin perder lo que ingreso el usuario antes*/
+                setEmail2((prev) => {                 
                     return { ...prev, error: true }
                 })
             } else {
@@ -118,9 +118,6 @@ const BookOrderForm = ({ handleSubmit }) => {
                     </div>
                 </div>
             </div>
-
-
-
             {!errors && <button type="submit" className="btn btn-success btn-lg" >Finish purchase</button>}
             {errors && <button type="submit" className="btn btn-success btn-lg" disabled>Finish purchase</button>}
         </form>

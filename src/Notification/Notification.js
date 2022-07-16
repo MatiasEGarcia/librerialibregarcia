@@ -1,6 +1,6 @@
 import { useState, createContext, useContext } from "react";
 
-//Componente que despliega la notificacion
+
 const Notification = ({ message, severity }) => {
 
     if (message === '') return
@@ -28,7 +28,7 @@ export const NotificationProvider = ({ children }) => {
     const setNotification = (sev, msg, timeout = 3) => {
         setMsgConfig({ severity: sev, message: msg });
 
-        //Para que desaparesca la notificacion
+  
         setTimeout(() => {
             setMsgConfig({ ...msgConfig, message: '' })
         }, timeout * 1000)

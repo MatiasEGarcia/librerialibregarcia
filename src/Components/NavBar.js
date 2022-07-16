@@ -19,12 +19,10 @@ function NavBar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navOpcionesCollapse">
                     <div className="navbar-nav navOpciones">
-                        <Link className="nav-link" to="#">Cuenta</Link>
                             <Link className="nav-link" to="/cart">
                                 <CartWidwet />
                                 {totalQuantity}
                             </Link>
-                        <Link className="nav-link" to="#">Favoritos</Link>
                         <div className="dropdown">
                             <Link className="nav-link dropdown-toggle" to="#" id="dropdownGeneros" data-bs-toggle="dropdown" aria-expanded="false">
                                 Generos

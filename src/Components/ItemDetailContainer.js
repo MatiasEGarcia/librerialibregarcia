@@ -7,7 +7,7 @@ import { findBook } from "../services/firebase/firestore";
 const ItemDetailContainer = () => {
 
     const [book, setBook] = useState();
-    const [noBook, setNoBook] = useState(); /*si no encuentra el libro*/
+    const [noBook, setNoBook] = useState(); 
     const [loading, setLoading] = useState(true);
     const [categoriesList, setCategoriesList] = useState();
     const { idBook } = useParams();
@@ -26,7 +26,7 @@ const ItemDetailContainer = () => {
 
     }, []);
 
-    /*Listar el array de categorias*/
+
     useEffect(() => {
         if (book) {
             try {

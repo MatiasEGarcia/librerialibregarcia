@@ -4,9 +4,9 @@ const CartContext = createContext();
 
 export const CartProvider = ({children}) => {
 
-    const [cart, setCart] = useState([]); // array para guardar los libros
-    const [totalQuantity , setTotalQuantity] = useState(0); //cantidad de libros en el carrito
-    const [totalAmount , setTotalAmount] = useState(); //precio total del carrito
+    const [cart, setCart] = useState([]); 
+    const [totalQuantity , setTotalQuantity] = useState(0); 
+    const [totalAmount , setTotalAmount] = useState(); 
 
     useEffect(()=>{
         let totalQuantity=0;
@@ -54,7 +54,6 @@ export const CartProvider = ({children}) => {
             isInCart,
             totalAmount,
         }}>
-            {/*toda la app tendra acceso a las variables*/}
             {children}
         </CartContext.Provider>
     )

@@ -20,7 +20,7 @@ const ItemListContainer = () => {
                 setLoading(false)
             })
   
-    }, [categoryName]) //Para que se ejecute cada vez que cambiamos de categoria
+    }, [categoryName]) 
 
     if(loading){
         return(

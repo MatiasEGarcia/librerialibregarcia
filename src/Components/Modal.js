@@ -1,6 +1,6 @@
 const Modal = ({children,title,isOpen,closeModal}) => {
 
-    //parar la propagacion del cierre del modal
+    
     const handlePropagation= (e) => e.stopPropagation();
 
     return(

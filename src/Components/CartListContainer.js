@@ -8,11 +8,11 @@ import { useNotification } from "../notification/Notification";
 import BookOrderForm from "./BookOrderForm";
 import { generateBookOrder } from "../services/firebase/firestore";
 
-/*Cart.js*/
+
 const CartListContainer = () => {
     const [loading, setLoading] = useState(false);
     const { cart, totalAmount, clearCart } = useContext(CartContext);
-    //customHooks
+    
     const { isOpen, openModal, closeModal } = useModal(false);
     const setNotification = useNotification();
 

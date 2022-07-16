@@ -13,7 +13,7 @@
 
 ## Gift de navegabilidad:
 
-![gift de navegabilidad](./libreriaLibreEntregaInter.gif)
+![gift de navegabilidad](./libreriaLibreEntregaF.gif)
 
 ---
 ## Que debo hacer para probar la app

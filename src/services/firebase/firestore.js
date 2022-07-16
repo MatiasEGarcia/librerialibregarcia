@@ -60,10 +60,9 @@ export const getBooks = (categoryName) => {
     return new Promise((resolve, reject) => {
 
         const collectionRef = categoryName ?
-            query(collection(db, 'books'), where('category', 'array-contains-any', [categoryName])) /*obtengo documentos que tengan ese nombre de categoria en el array category*/
+            query(collection(db, 'books'), where('category', 'array-contains-any', [categoryName])) 
             : (collection(db, 'books'));
 
-        //peticion asincrona al firestore    
         getDocs(collectionRef).then(response => {
             const booksFormatted = response.docs.map(doc => {
                 return { id: doc.id, ...doc.data() };
